@@ -1,6 +1,6 @@
 project("erpiko")
 cmake_minimum_required(VERSION 2.8 FATAL_ERROR)
-
+cmake_policy(SET CMP0054 NEW)
 if (CMAKE_CXX_COMPILER_ID STREQUAL "GNU" OR
     CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
   set(warnings "-Wall -Wextra -Werror")
@@ -41,8 +41,6 @@ endif()
 enable_testing()
 add_subdirectory(src)
 add_subdirectory(tests)
-
-set_property(TARGET src PROPERTY CXX_STANDARD 14)
 
 set(CONFIGURED_ONCE TRUE CACHE INTERNAL
   "A flag showing that CMake has configured at least once.")
