@@ -8,6 +8,7 @@ elseif (CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
   set(warnings "/EHsc")
 endif()
 
+
 if (NOT CONFIGURED_ONCE)
   if (NOT MSVC)
     set(CMAKE_CXX_FLAGS "-std=c++14 ${warnings}"
@@ -31,15 +32,17 @@ else()
     set_property(TARGET libresslssl PROPERTY IMPORTED_LOCATION ${CMAKE_SOURCE_DIR}/deps/libressl/x64/libssl-37.lib)
     set_property(TARGET libressltls PROPERTY IMPORTED_LOCATION ${CMAKE_SOURCE_DIR}/deps/libressl/x64/libtls-37.lib)
   else()
-    set_property(TARGET libresslcrypto PROPERTY IMPORTED_LOCATION ${CMAKE_SOURCE_DIR}/deps/libressl/x86/libcrypto-37.lib)
-    set_property(TARGET libresslssl PROPERTY IMPORTED_LOCATION ${CMAKE_SOURCE_DIR}/deps/libressl/x86/libssl-37.lib)
-    set_property(TARGET libressltls PROPERTY IMPORTED_LOCATION ${CMAKE_SOURCE_DIR}/deps/libressl/x86/libtls-37.lib)
+    set_property(TARGET libresslcrypto PROPERTY IMPORTED_LOCATION ${CMAKE_SOURCE_DIR}/deps/libressl/x86/crypto.lib)
+    set_property(TARGET libresslssl PROPERTY IMPORTED_LOCATION ${CMAKE_SOURCE_DIR}/deps/libressl/x86/ssl.lib)
+    set_property(TARGET libressltls PROPERTY IMPORTED_LOCATION ${CMAKE_SOURCE_DIR}/deps/libressl/x86/tls.lib)
   endif()
 endif()
 
 enable_testing()
 add_subdirectory(src)
 add_subdirectory(tests)
+
+set_property(TARGET src PROPERTY CXX_STANDARD 14)
 
 set(CONFIGURED_ONCE TRUE CACHE INTERNAL
   "A flag showing that CMake has configured at least once.")
